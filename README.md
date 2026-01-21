@@ -30,7 +30,7 @@ This backend implements a three-layer architecture:
 - Global marketplace metadata
 
   <p align="center">
-  <img src="https://raw.githubusercontent.com/Ishita-Si/Sakti-Link/main/docs/architecture.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/Ishita-Si/Sakti-Link/main/docs/Architecture.png" width="100%" />
 </p>
 
 
