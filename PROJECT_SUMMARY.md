@@ -285,11 +285,8 @@ curl -X POST http://localhost:8000/api/v1/learning/modules/list \
 - Documentation: See `/docs` folder
 - API Reference: http://localhost:8000/docs
 - Issues: Create GitHub issues
-- Email: support@sakti-link.org
-
-## License
-
-MIT License - Free for commercial and non-commercial use
+- Email: 24cs2019@rgipt.ac.in
+  
 
 ---
 
