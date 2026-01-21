@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  edge-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.edge
+    container_name: sakti-link-edge
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+      - ./cache:/app/cache
+    environment:
+      - DEBUG=False
+      - OFFLINE_MODE=True
+      - DATABASE_PATH=/app/data/sakti_link.db
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - sakti-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: sakti-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - sakti-network
+
+  # Optional: Cloud server (if needed)
+  # cloud-server:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.cloud
+  #   container_name: sakti-link-cloud
+  #   ports:
+  #     - "8001:8001"
+  #   environment:
+  #     - DATABASE_URL=postgresql://user:pass@postgres:5432/sakti_cloud
+  #   networks:
+  #     - sakti-network
+
+volumes:
+  redis-data:
+
+networks:
+  sakti-network:
+    driver: bridge
