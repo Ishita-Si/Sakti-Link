@@ -19,7 +19,7 @@ This backend implements a three-layer architecture:
 - Encrypted data storage
 - Core services: Learning, Earning (Micro-gigs), Legal Help
 
-### Block 3: Optional Cloud Layer
+### Block 3: Cloud Layer
 - Metadata synchronization
 - Model updates
 - Aggregated analytics
@@ -42,7 +42,7 @@ This backend implements a three-layer architecture:
 - **Llama (quantized)** - Intent understanding and reasoning
 - **Sentence Transformers** - Semantic search
 
-### Cloud (Optional)
+### Cloud 
 - **FastAPI** - Cloud API
 - **PostgreSQL** - Cloud database
 - **Redis** - Cloud caching
@@ -136,108 +136,6 @@ python scripts/init_db.py
 python scripts/download_models.py
 ```
 
-### Running the Edge Server
-
-```bash
-# Development mode
-cd edge_server
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-
-# Production mode (with workers)
-gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
-```
-
-### Running the Cloud Server (Optional)
-
-```bash
-cd cloud_server
-uvicorn main:app --reload --host 0.0.0.0 --port 8001
-```
-
-## API Documentation
-
-Once the server is running, access:
-- **Edge Server API Docs**: http://localhost:8000/docs
-- **Cloud Server API Docs**: http://localhost:8001/docs
-
-## Key API Endpoints
-
-### Edge Server
-
-#### Voice Interaction
-- `POST /api/v1/voice/process` - Process voice input
-- `POST /api/v1/voice/synthesize` - Text to speech
-
-#### Learning
-- `GET /api/v1/learning/modules` - List learning modules
-- `POST /api/v1/learning/progress` - Update learning progress
-- `GET /api/v1/learning/credits` - Get user credits
-
-#### Earning (Micro-Gigs)
-- `GET /api/v1/gigs/available` - List available gigs
-- `POST /api/v1/gigs/apply` - Apply for a gig
-- `GET /api/v1/gigs/user` - User's gig history
-
-#### Legal Help
-- `POST /api/v1/legal/query` - Ask legal question
-- `GET /api/v1/legal/topics` - List legal topics
-
-#### Skill Swap
-- `POST /api/v1/skills/teach` - Register skill to teach
-- `POST /api/v1/skills/learn` - Request to learn skill
-- `GET /api/v1/skills/marketplace` - Browse skills
-
-### Cloud Server
-
-#### Sync
-- `POST /api/v1/sync/metadata` - Sync edge server metadata
-- `GET /api/v1/sync/updates` - Get model updates
-
-#### Analytics
-- `GET /api/v1/analytics/usage` - Usage statistics
-- `GET /api/v1/analytics/impact` - Impact metrics
-
-## Configuration
-
-### Edge Server Configuration (`edge_server/config/settings.py`)
-
-```python
-# Database
-DATABASE_PATH = "data/sakti_link.db"
-DATABASE_KEY = "your-encryption-key"
-
-# AI Models
-WHISPER_MODEL = "ai4bharat/indicwhisper-medium"
-LLAMA_MODEL = "llama-2-7b-chat-q4"
-TTS_ENGINE = "bhashini"
-
-# Languages
-SUPPORTED_LANGUAGES = ["hi", "bn", "ta", "te", "mr", "gu"]
-
-# Offline Mode
-OFFLINE_MODE = True
-SYNC_INTERVAL = 3600  # seconds
-```
-
-## Deployment
-
-### Raspberry Pi Setup
-
-```bash
-# Install on Raspberry Pi 4 (4GB+ RAM recommended)
-sudo apt-get update
-sudo apt-get install python3-pip redis-server nginx
-
-# Clone and setup
-git clone <repo-url>
-cd sakti-link-backend
-pip3 install -r requirements-edge.txt
-
-# Setup as systemd service
-sudo cp scripts/sakti-link-edge.service /etc/systemd/system/
-sudo systemctl enable sakti-link-edge
-sudo systemctl start sakti-link-edge
-```
 
 ### Docker Deployment
 
@@ -261,21 +159,7 @@ docker run -d -p 8000:8000 \
 - Optional cloud sync uses metadata only
 - HTTPS/TLS for all API communication
 
-## Testing
 
-```bash
-# Run all tests
-pytest
-
-# Run edge server tests
-pytest tests/edge_server/
-
-# Run cloud server tests
-pytest tests/cloud_server/
-
-# Run with coverage
-pytest --cov=edge_server --cov=cloud_server
-```
 
 ## Performance Optimization
 
@@ -285,18 +169,6 @@ pytest --cov=edge_server --cov=cloud_server
 - Lazy loading of AI models
 - Connection pooling
 
-## Monitoring
-
-```bash
-# View logs
-tail -f logs/edge_server.log
-
-# Monitor system resources
-htop
-
-# Redis monitoring
-redis-cli monitor
-```
 
 ## Contributing
 
@@ -310,11 +182,7 @@ redis-cli monitor
 
 MIT License - See LICENSE file for details
 
-## Support
 
-For issues and questions:
-- GitHub Issues: <repo-url>/issues
-- Email: support@sakti-link.org
 
 ## Roadmap
 
