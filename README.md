@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Ishita-Si/Sakti-Link/main/docs/Screenshot%202026-01-21%20155644.png" width="100%" />
+</p>
+
 # Sakti-Link Backend
 
 Voice-first, offline-first AI platform for women's empowerment through skilling, earning, and legal awareness.
@@ -24,6 +28,11 @@ This backend implements a three-layer architecture:
 - Model updates
 - Aggregated analytics
 - Global marketplace metadata
+
+  <p align="center">
+  <img src="https://raw.githubusercontent.com/Ishita-Si/Sakti-Link/main/docs/architecture.png" width="100%" />
+</p>
+
 
 ## Technology Stack
 
