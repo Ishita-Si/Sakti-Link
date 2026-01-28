@@ -146,19 +146,6 @@ python scripts/download_models.py
 ```
 
 
-### Docker Deployment
-
-```bash
-# Build edge server image
-docker build -f Dockerfile.edge -t sakti-link-edge .
-
-# Run container
-docker run -d -p 8000:8000 \
-  -v ./data:/app/data \
-  -v ./models:/app/models \
-  --name sakti-link-edge \
-  sakti-link-edge
-```
 
 ## Security
 
@@ -195,13 +182,13 @@ MIT License - See LICENSE file for details
 
 ## Roadmap
 
-- [ ] Phase 1: Core voice interaction and intent routing
-- [ ] Phase 2: Learning modules and skill swap
-- [ ] Phase 3: Micro-gig marketplace
-- [ ] Phase 4: Legal awareness AI
-- [ ] Phase 5: Cloud synchronization
-- [ ] Phase 6: Multi-edge server federation
-- [ ] Phase 7: Mobile app integration
+- Phase 1: Core voice interaction and intent routing
+- Phase 2: Learning modules and skill swap
+- Phase 3: Micro-gig marketplace
+- Phase 4: Legal awareness AI
+- Phase 5: Cloud synchronization
+-  Phase 6: Multi-edge server federation
+-  Phase 7: Mobile app integration
 
 ## Acknowledgments
 
