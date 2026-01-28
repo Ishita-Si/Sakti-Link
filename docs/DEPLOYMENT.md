@@ -6,8 +6,6 @@
 3. [Installation Methods](#installation-methods)
 4. [Configuration](#configuration)
 5. [Running the Server](#running-the-server)
-6. [Monitoring & Maintenance](#monitoring--maintenance)
-7. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -68,46 +66,8 @@ sudo apt-get install build-essential git -y
 
 ## Installation Methods
 
-### Method 1: Docker Installation (Recommended)
 
-#### Step 1: Install Docker
-```bash
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-sudo usermod -aG docker $USER
-```
-
-#### Step 2: Clone Repository
-```bash
-git clone https://github.com/your-org/sakti-link-backend.git
-cd sakti-link-backend
-```
-
-#### Step 3: Configure Environment
-```bash
-cp .env.example .env
-nano .env  # Edit configuration
-```
-
-#### Step 4: Build and Run
-```bash
-docker-compose up -d
-```
-
-#### Step 5: Initialize Database
-```bash
-docker exec -it sakti-link-edge python scripts/init_db.py
-```
-
-#### Step 6: Check Status
-```bash
-docker-compose ps
-curl http://localhost:8000/health
-```
-
----
-
-### Method 2: Manual Installation
+### Manual Installation
 
 #### Step 1: Clone Repository
 ```bash
@@ -270,81 +230,7 @@ cd edge_server
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### Production Mode (with Gunicorn)
-```bash
-gunicorn edge_server.main:app \
-  -w 4 \
-  -k uvicorn.workers.UvicornWorker \
-  --bind 0.0.0.0:8000 \
-  --access-logfile logs/access.log \
-  --error-logfile logs/error.log
-```
 
-### Docker Mode
-```bash
-docker-compose up -d
-```
-
-### Check if Running
-```bash
-curl http://localhost:8000/health
-```
-
-Expected response:
-```json
-{
-  "status": "healthy",
-  "service": "sakti-link-edge",
-  "version": "1.0.0",
-  "mode": "offline"
-}
-```
-
----
-
-## Monitoring & Maintenance
-
-### View Logs
-
-**Docker:**
-```bash
-docker logs -f sakti-link-edge
-```
-
-**Systemd:**
-```bash
-sudo journalctl -u sakti-link -f
-```
-
-**Log Files:**
-```bash
-tail -f logs/edge_server.log
-```
-
-### Monitor System Resources
-
-```bash
-# CPU and Memory
-htop
-
-# Disk Space
-df -h
-
-# Database Size
-du -sh data/sakti_link.db
-```
-
-### Health Check Endpoint
-
-```bash
-curl http://localhost:8000/health
-```
-
-### Metrics Endpoint
-
-```bash
-curl http://localhost:8000/api/v1/system/metrics
-```
 
 ### Database Backup
 
@@ -358,22 +244,6 @@ cp data/sakti_link.db data/sakti_link_backup_$(date +%Y%m%d).db
 # Restart server
 sudo systemctl start sakti-link  # or docker-compose up -d
 ```
-
----
-
-## Troubleshooting
-
-### Server Won't Start
-
-**Check logs:**
-```bash
-tail -n 100 logs/edge_server.log
-```
-
-**Common issues:**
-- Port 8000 already in use: Change PORT in .env
-- Redis not running: `sudo systemctl start redis-server`
-- Database locked: Stop all instances, remove .db-shm and .db-wal files
 
 ### High Memory Usage
 
@@ -406,64 +276,17 @@ python scripts/init_db.py
 
 ## Performance Optimization
 
-### For Low-End Devices (Raspberry Pi 3)
+### For Low-End Devices 
 
 1. Use Bhashini API instead of local models
 2. Reduce number of workers to 2
 3. Enable aggressive caching
 4. Limit concurrent requests
 
-**In .env:**
-```bash
-OFFLINE_MODE=False  # Use cloud APIs
-MAX_WORKERS=2
-REDIS_CACHE_TTL=7200
-```
-
-### For High-Traffic Deployments
-
-1. Use SSD storage
-2. Increase worker count
-3. Enable connection pooling
-4. Use load balancer
-
----
-
-## Security Best Practices
-
-1. **Change default keys** in .env
-2. **Restrict network access** using firewall
-3. **Enable HTTPS** with reverse proxy (nginx)
-4. **Regular backups** of database
-5. **Update dependencies** regularly
-6. **Monitor logs** for suspicious activity
-
----
-
-## Updating the Server
-
-### Docker
-```bash
-docker-compose down
-git pull
-docker-compose build
-docker-compose up -d
-```
-
-### Manual
-```bash
-sudo systemctl stop sakti-link
-git pull
-source venv/bin/activate
-pip install -r requirements.txt
-sudo systemctl start sakti-link
-```
-
 ---
 
 ## Support
 
 For issues and questions:
-- GitHub Issues: https://github.com/your-org/sakti-link-backend/issues
-- Email: support@sakti-link.org
-- Documentation: https://docs.sakti-link.org
+- Email: 24cs2019@rgipt.ac.in
+
